@@ -5,12 +5,19 @@ const userRoutes = require('./routes/userRoutes');
 const caseRoutes = require('./routes/caseRoutes');
 const scheduleRoutes = require('./routes/scheduleRoutes');
 
+// Load environment variables (only needed for local dev)
+require('dotenv').config();
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Use env variables, fallback to defaults for local dev
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/case_management_db';
+const PORT = process.env.PORT || 3001;
+
 // MongoDB Connection
-mongoose.connect('mongodb://127.0.0.1:27017/case_management_db', {
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -23,5 +30,4 @@ app.use('/api/cases', caseRoutes);
 app.use('/api/schedules', scheduleRoutes);
 
 // Start server
-const PORT = 3001;
 app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
