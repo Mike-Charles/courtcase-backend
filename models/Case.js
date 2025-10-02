@@ -1,42 +1,19 @@
-// models/Case.js
 const mongoose = require('mongoose');
 
 const caseSchema = new mongoose.Schema({
-  caseTitle: {
-    type: String,
-    required: true
-  },
-  judge: {
-    type: String,
-    required: true
-  },
-  partiesInvolved: {
-    type: String,
-    required: true
-  },
-  status: {
-    type: String,
-    enum: ['Open', 'Pending', 'Closed'],
-    default: 'Open'
-  },
-  createdBy: {
-    type: String,
-    required: true
-  },
-  dateFiled: {
-    type: Date,
-    default: Date.now
-  },
-  lastUpdated: {
-    type: Date,
-    default: Date.now
-  }
-});
-
-// Auto-update lastUpdated before save
-caseSchema.pre('save', function (next) {
-  this.lastUpdated = Date.now();
-  next();
+  caseNumber: {type: String},
+  title: { type: String, required: true },
+  description: { type: String },
+  partiesInvolved: { type: String },
+  filedByName: { type: String, required: true },
+  status: { type: String, enum: ['Registered', 'Submitted', 'Approved', 'Disapproved', 'Assigned', 'Scheduled'], default: `Registered` },
+  createdAt: { type: Date, default: Date.now },
+  registrationNotes: { type: String },
+  registeredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  submittedToRegistrar: { type: Boolean, default: false },
+  assignedJudge: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  assignedJudgeName: { type: String },
+  endorsedBy: { type: String },
 });
 
 module.exports = mongoose.model('Case', caseSchema);
