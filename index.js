@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Connect to MongoDB
 mongoose.connect(
-  "mongodb+srv://user3:S4TTisuxGIEoKytK@cluster3.mg30thf.mongodb.net/case_management_db?retryWrites=true&w=majority",
+  "mongodb+srv://user3:S4TTisuxGIEoKytK@cluster3.mg30thf.mongodb.net/CASE_MANAGEMENTB_DB?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
